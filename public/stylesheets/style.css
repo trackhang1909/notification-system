@@ -256,6 +256,30 @@ ul.social-footer2 li a {
     color: rgb(30, 30, 133)
 }
 
+.register-form-select {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid transparent;
+    color: white !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    text-transform: capitalize;
+}
+
+.register-form-select:hover, .register-form-select:focus {
+    background-color: rgba(255, 255, 255, 0.0001);
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    text-transform: capitalize;
+}
+
+.register-option-select {
+    background-color: #252525;
+    text-transform: capitalize;
+}
+
 .login-form-control {
     background: transparent;
     color: white !important;
@@ -402,6 +426,10 @@ ul.social-footer2 li a {
 ====================== */
 
 #alert-error-register {
+    display: none;
+}
+
+#alert-success-register {
     display: none;
 }
 

@@ -5,10 +5,12 @@ registerForm.addEventListener('submit', registerUser);
 function registerUser (event) {
     event.preventDefault();
     const alertError = document.getElementById('alert-error-register');
+    const alertSuccess = document.getElementById('alert-success-register');
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
+    const role = document.getElementById('role').value;
     const options = {
         method: 'POST',
         headers: {
@@ -17,10 +19,12 @@ function registerUser (event) {
         body: JSON.stringify({
             username,
             email,
-            password
+            password,
+            role
         })
     };
     if (password !== confirmPassword) {
+        alertSuccess.style.display = 'none';
         alertError.style.display = 'block';
         alertError.innerText = 'Mật khẩu xác nhận không hợp lệ';
     }
@@ -29,11 +33,14 @@ function registerUser (event) {
         .then(res => res.json())
         .then(data => {
             if (data.error === 'true') {
+                alertSuccess.style.display = 'none';
                 alertError.style.display = 'block';
                 alertError.innerText = data.message;
             }
             else {
-                window.location = '/login?username=' + data.username;
+                alertError.style.display = 'none';
+                alertSuccess.style.display = 'block';
+                alertSuccess.innerText = data.message;
             }
         });
     }

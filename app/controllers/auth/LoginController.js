@@ -1,35 +1,25 @@
 const User = require('../../models/User');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
 
 class LoginController {
     // [GET] /login
     index(req, res) {
-        res.render('auth/login', { username: req.query.username, message: '' });
+        res.render('auth/login', { username: '', message: '' });
     }
     // [POST] /login
     async store(req, res) {
-        const { username, password, rememberPassword } = req.body;
-        const user = await User.findOne({ username }).lean();
-        if (!user) {
+        try {
+            const { username, password, rememberPassword } = req.body;
+            await User.findOne({ username }).lean()
+            .then((user) => {
+                User.addTokenToCookie(user, password, rememberPassword, res);
+            })
+            .catch(() => {
+                return res.render('auth/login', { username, message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ' });
+            });
+        }
+        catch (error) {
             return res.render('auth/login', { username, message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ' });
         }
-        if (bcrypt.compareSync(password, user.password)) {
-            const token = jwt.sign({
-                id: user._id,
-                username: user.username,
-            },
-            JWT_SECRET);
-            if (rememberPassword === 'on') {
-                res.cookie('token', token, { expires: new Date(Date.now() + 48 * 3600000), httpOnly: true });
-            }
-            else {
-                res.cookie('token', token);
-            }
-            return res.redirect('/');
-        }
-        return res.render('auth/login', { username, message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ' });
     }
 }
 
