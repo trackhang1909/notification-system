@@ -1,11 +1,15 @@
+document.addEventListener("DOMContentLoaded", function(event) {
+});
+
 // Register
 const registerForm = document.getElementById('register-form');
-registerForm.addEventListener('submit', registerUser);
+if (registerForm !== null) registerForm.addEventListener('submit', registerUser);
 
 function registerUser (event) {
     event.preventDefault();
     const alertError = document.getElementById('alert-error-register');
     const alertSuccess = document.getElementById('alert-success-register');
+    const fullname = document.getElementById('fullname').value;
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -17,6 +21,7 @@ function registerUser (event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            fullname,
             username,
             email,
             password,
@@ -45,3 +50,5 @@ function registerUser (event) {
         });
     }
 }
+
+

@@ -11,9 +11,10 @@ class RegisterController {
     // [POST] /register
     async store(req, res) {
         try {
-            const { username, email, password: plainTextPassword, role } = req.body;
+            const { fullname, username, email, password: plainTextPassword, role } = req.body;
             const password = bcrypt.hashSync(plainTextPassword, 10);
             await User.create({
+                fullname,
                 username,
                 email,
                 password,

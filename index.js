@@ -4,8 +4,12 @@ const path = require('path');
 const route = require('./routes');
 const cookieParser = require('cookie-parser')
 const connectDatabase = require('./config/database');
+const passportConfig = require('./config/passport');
 
 const app = express();
+
+//Passport config
+passportConfig(app);
 
 //Connect database
 connectDatabase();
