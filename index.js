@@ -2,15 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const route = require('./routes');
+const cookieParser = require('cookie-parser')
 const connectDatabase = require('./config/database');
+const passportConfig = require('./config/passport');
 
 const app = express();
+
+//Passport config
+passportConfig(app);
 
 //Connect database
 connectDatabase();
 
 //Static file
 app.use(express.static('public'));
+
+//Cookie parse
+app.use(cookieParser());
 
 //Body parse
 app.use(express.json());
