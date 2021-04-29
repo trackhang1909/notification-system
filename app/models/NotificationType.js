@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Role = new Schema({
+const NotificationType = new Schema({
     name: { type: String, required: true },
 }, {
     timestamps: true,
 });
 
-module.exports = mongoose.model('Role', Role);
+module.exports = mongoose.model('NotificationType', NotificationType);

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 const User = require('../models/User');
+const Role = require('../models/Role');
 
 module.exports = (req, res, next) => {
     const token = req.cookies.tokenAuth;

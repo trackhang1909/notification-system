@@ -1,4 +1,4 @@
-const title = 'Home Page';
+const title = 'Trang chủ';
 
 class HomeController {
     // [GET] /

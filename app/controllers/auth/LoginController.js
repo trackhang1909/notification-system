@@ -10,6 +10,7 @@ class LoginController {
     // [POST] /login
     async store(req, res) {
         try {
+            //Google login
             if (req.user) {
                 const { googleId } = req.user;
                 if (!googleId) {
@@ -18,6 +19,7 @@ class LoginController {
                 } 
                 return User.addTokenToCookie(req.user, 'on', res);
             }
+            //Username login
             const { username, password, rememberPassword } = req.body;
             await User.findOne({ username }).lean()
             .then((user) => {
