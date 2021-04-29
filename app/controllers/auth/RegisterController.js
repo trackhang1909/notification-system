@@ -1,24 +1,27 @@
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const Role = require('../../models/Role');
+const Category = require('../../models/Category');
 
 class RegisterController {
     // [GET] /register
     async index(req, res) {
         const roles = await Role.find({}).lean();
-        res.render('auth/register', { roles });
+        const categories = await Category.find({}).lean();
+        res.render('auth/register', { roles, categories });
     }
     // [POST] /register
     async store(req, res) {
         try {
-            const { fullname, username, email, password: plainTextPassword, role } = req.body;
+            const { fullname, username, email, password: plainTextPassword, role, category } = req.body;
             const password = bcrypt.hashSync(plainTextPassword, 10);
             await User.create({
                 fullname,
                 username,
                 email,
                 password,
-                role
+                role,
+                category
             });
             return res.status(201).json({error: 'false', message: 'Tạo tài khoản thành công'});
         }

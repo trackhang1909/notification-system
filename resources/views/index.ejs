@@ -1,8 +1,108 @@
 <%- include('layouts/header') -%>
 
 <div class="container-fluid">
-    <p>Hello <%= locals.fullname %></p>
-    <a href="/logout">Logout</a>
+    <div class="row">
+        <div class="col-12 col-md-3" style="background-color: #1c1e21; height: 500px;">
+            <div class="card text-white mt-3" style="background: transparent;">
+                <div class="card-body">
+                    <h5 class="card-title">Phân loại thông báo</h5>
+                    <p class="card-text">Tìm kiếm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6" style="background-color: #1c1e21">
+            <table id="my-post-table" class="table table-borderless mt-3">
+                <tbody>
+                    <tr>
+                        <td id="my-post-image" class="w-60">
+                            <%- include('avatar') -%>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Bạn đang nghĩ gì thế?" data-bs-toggle="modal" data-bs-target="#addPostModal">
+                            <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Tạo bài viết</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Hello</p>
+                                            <button type="button" class="btn btn-primary w-100percent">Đăng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table mt-3 post-table">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="float-left w-60">
+                                <%- include('avatar') -%>
+                            </div>
+                            <div class="info-post-acc">
+                                <span><%= locals.fullname %><br></span>
+                                <span class="time-post-acc">1 giờ trước</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p>Hello các bạn</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span><i class="fa fa-thumbs-up" aria-hidden="true"></i> 7 likes</span></td>
+                        <td class="text-end"><span><i class="fa fa-comments" aria-hidden="true"></i> 11 comment</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w-50">
+                            <button type="button" class="w-100percent btn btn-secondary">
+                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like
+                            </button>
+                        </td>
+                        <td class="text-end">
+                            <button type="button" class="w-100percent btn btn-secondary">
+                                <i class="fa fa-comment-o" aria-hidden="true"></i> Comment
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-md-3" style="background-color: #1c1e21">
+            <table id="notification-table" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Thông báo</th>
+                        <td class="text-end"><a href="#">Xem tất cả</a></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <span class="category-noti">[Phòng Đại học] - 23/11/2020</span><br>
+                            <h6 class="mt-2">Thông báo khai giảng khóa học Anh văn, Tin học, Toán tin</h6>
+                            <a class="detail-noti" href="/detail">Xem chi tiết</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="category-noti">[Phòng Đại học] - 23/11/2020</span><br>
+                            <h6 class="mt-2">Thông báo khai giảng khóa học Anh văn, Tin học, Toán tin</h6>
+                            <a class="detail-noti" href="/detail">Xem chi tiết</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
 
 <%- include('layouts/footer') -%>

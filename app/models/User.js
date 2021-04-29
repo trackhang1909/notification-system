@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
+const Role = require('./Role');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const User = new Schema({
@@ -13,17 +14,22 @@ const User = new Schema({
     role: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Role"
-    }
+    },
+    category: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category"
+    }]
 }, {
     timestamps: true,
 });
 
 User.statics.addTokenToCookie = async (user, rememberPassword, res) => {
+    const role = await Role.findById(user.role).lean();
     const token = jwt.sign({
         id: user._id,
         fullname: user.fullname,
         avatar: user.avatar,
-        role: user.role
+        role: role.name
     },
     JWT_SECRET);
     rememberPassword === 'on' 
@@ -32,4 +38,4 @@ User.statics.addTokenToCookie = async (user, rememberPassword, res) => {
     return res.redirect('/');
 }
 
-module.exports = mongoose.model('users', User);
+module.exports = mongoose.model('User', User);

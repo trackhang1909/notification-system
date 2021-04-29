@@ -4,7 +4,7 @@
 
 /* Main Footer */
 footer {
-    position: fixed;
+    position: initial;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -12,7 +12,7 @@ footer {
 
 footer .main-footer {
     padding: 20px 0;
-    background: #252525;
+    background: #212529 !important;
 }
 
 footer ul {
@@ -22,7 +22,7 @@ footer ul {
 
 /* Copy Right Footer */
 .footer-copyright {
-    background: #222;
+    background: #212529 !important;
     padding: 5px 0;
 }
 
@@ -465,6 +465,148 @@ ul.social-footer2 li a {
     line-height: 20px; /* 50% of parent */
     color: #fff;
 }
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.h-40 {
+    height: 40px;
+}
+
+.w-60 {
+    width: 60px !important;
+}
+
+.w-100percent {
+    width: 100%;
+}
+
+.btn-user-setting {
+    border: 0px; 
+    background: transparent;
+    color: whitesmoke;
+}
+
+.btn-user-setting:hover {
+    border: 0px; 
+    background: transparent;
+    color: #c2c2c2;
+    box-shadow: none;
+}
+
+.btn-user-setting:focus {
+    border: 0px; 
+    background: transparent;
+    color: #c2c2c2;
+    box-shadow: none;
+}
+
+#notification-table {
+    color: white;
+}
+
+#notification-table tbody tr td:hover {
+    color: white;
+    background-color: #9b9b9b48;
+}
+
+.category-noti {
+    font-size: small; 
+    font-style: italic; 
+    color: rgb(199, 199, 199);
+}
+
+.detail-noti {
+    font-size: 14px; 
+    font-style: italic;
+}
+
+.form-control {
+    height: 40px;
+}
+
+#my-post-table {
+    background-color: #9c9c9c57; 
+    border-radius: 5px;
+}
+
+#my-post-table td {
+    padding: 15px;
+}
+
+#my-post-image {
+    padding-right: 0px !important;
+}
+
+#my-post-table .modal-content {
+    background-color: #494949; 
+    color: white;
+}
+
+.post-table {
+    background-color: #9c9c9c57; 
+    border-radius: 5px;
+    color: white;
+}
+
+.post-table td {
+    padding: 10px 15px;
+    border-color: rgb(88, 88, 88);
+}
+
+.post-table .w-50 {
+    border: none;
+}
+
+.info-post-acc {
+    line-height: 1.2;
+}
+
+.time-post-acc {
+    font-size: small;
+    color: rgb(199, 199, 199);
+}
+
+.select2-container--default .select2-selection--multiple {
+    min-height: 40px !important;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid transparent;
+    color: white !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    text-transform: capitalize;
+}
+
+.select2-container--default .select2-selection--multiple:hover {
+    background-color: rgba(255, 255, 255, 0.0001);
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    text-transform: capitalize;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #252525;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    height: 25px;
+    margin-left: 10px;
+    padding-top: 2px;
+}
+
+
+
+
+
+
   
 
 

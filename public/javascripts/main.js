@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
+    $('.js-register-category-multiple').select2({
+        placeholder: "Chọn chuyên mục",
+    });
 });
 
 // Register
@@ -15,6 +18,7 @@ function registerUser (event) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
     const role = document.getElementById('role').value;
+    const category = $("#category").val();
     const options = {
         method: 'POST',
         headers: {
@@ -25,7 +29,8 @@ function registerUser (event) {
             username,
             email,
             password,
-            role
+            role,
+            category
         })
     };
     if (password !== confirmPassword) {

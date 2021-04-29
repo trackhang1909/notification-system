@@ -1,0 +1,7 @@
+<% if (!locals.avatar) { %>
+    <div class="avatar-circle">
+        <span class="avatar-initials"><%= locals.fullname[0] %></span>
+    </div>
+<% } else { %>
+    <img src="<%= locals.avatar %>" alt="Avatar" class="avatar">
+<% } %>
