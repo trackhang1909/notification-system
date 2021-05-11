@@ -1,0 +1,36 @@
+<%- include('../layouts/header') -%>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="hide-col col-3" style="background-color: #e2e3e5; color: white; padding: 0;">
+            <div class="list-group" style="border-radius: 0px;">
+                <div class="position-relative">
+                    <button onclick="openItemTypeNoti(this)" type="button" class="list-group-item list-group-item-action list-group-item-secondary">
+                        Phân loại thông báo
+                        <i class="fa fa-angle-right pe-3 position-absolute top-50 end-0 translate-middle-y" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div id="item-type-noti" class="ds-none">
+                    <button type="button" class="ps-5 list-group-item list-group-item-action list-group-item-dark">Tất cả thông báo</button>
+                    <button type="button" class="ps-5 list-group-item list-group-item-action list-group-item-dark">Phòng ban</button>
+                    <button type="button" class="ps-5 list-group-item list-group-item-action list-group-item-dark">Chủ đề</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-9" style="background-color: #1c1e21; min-height: 700px; color: white;">
+            <table class="table table-dark" style="margin-top: 12px;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <h5>THỐNG KÊ MÔN MỞ TRONG HỌC KỲ HÈ</h5>
+                            <p class="mb-2">Thân gửi sinh viên,...</p>
+                            <a class="href-noti" href="#">Chi tiết thông báo</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') -%>

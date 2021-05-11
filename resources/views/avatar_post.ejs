@@ -1,0 +1,7 @@
+<% if (!post.user.avatar) { %>
+    <div class="avatar-circle">
+        <span class="avatar-initials"><%= post.user.fullname[0] %></span>
+    </div>
+<% } else { %>
+    <img src="<%= post.user.avatar %>" alt="Avatar" class="avatar">
+<% } %></img>
