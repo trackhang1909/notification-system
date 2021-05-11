@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <select class="form-control js-register-category-multiple" multiple="multiple" id="category">
+                                    <select class="form-control js-register-category-multiple" multiple="multiple" id="categories">
                                         <% if(categories) { categories.forEach(category => { %>
                                             <option value="<%= category._id %>"><%= category.name %></option>
                                         <% }) } %>

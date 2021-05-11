@@ -2,33 +2,34 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-md-3" style="background-color: #1c1e21; height: 500px;">
+        <div class="hide-col col-lg-3" style="background-color: #1c1e21;">
             <div class="card text-white mt-3" style="background: transparent;">
                 <div class="card-body">
                     <h5 class="card-title">Phân loại thông báo</h5>
                     <p class="card-text">Tìm kiếm</p>
                 </div>
             </div>
+            <a href="javascript:location.reload(true)">Refresh Page</a>
         </div>
-        <div class="col-12 col-md-6" style="background-color: #1c1e21">
+        <div class="col-12 col-lg-6" style="background-color: #1c1e21; min-height: 700px;">
             <table id="my-post-table" class="table table-borderless mt-3">
                 <tbody>
                     <tr>
-                        <td id="my-post-image" class="w-60">
+                        <td class="my-post-image w-60">
                             <%- include('avatar') -%>
                         </td>
                         <td>
                             <input type="text" class="form-control" placeholder="Bạn đang nghĩ gì thế?" data-bs-toggle="modal" data-bs-target="#addPostModal">
-                            <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <div class="modal fade" id="addPostModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Tạo bài viết</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button onclick="closePostForm()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Hello</p>
-                                            <button type="button" class="btn btn-primary w-100percent">Đăng</button>
+                                            <textarea name="content" id="my-post-editor"></textarea>
+                                            <button id="btn-cr-up-post" onclick="createPost()" type="submit" class="btn btn-primary w-100percent mt-3">Đăng</button>
                                         </div>
                                     </div>
                                 </div>
@@ -37,44 +38,10 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table mt-3 post-table">
-                <tbody>
-                    <tr>
-                        <td colspan="2">
-                            <div class="float-left w-60">
-                                <%- include('avatar') -%>
-                            </div>
-                            <div class="info-post-acc">
-                                <span><%= locals.fullname %><br></span>
-                                <span class="time-post-acc">1 giờ trước</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p>Hello các bạn</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span><i class="fa fa-thumbs-up" aria-hidden="true"></i> 7 likes</span></td>
-                        <td class="text-end"><span><i class="fa fa-comments" aria-hidden="true"></i> 11 comment</span></td>
-                    </tr>
-                    <tr>
-                        <td class="w-50">
-                            <button type="button" class="w-100percent btn btn-secondary">
-                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like
-                            </button>
-                        </td>
-                        <td class="text-end">
-                            <button type="button" class="w-100percent btn btn-secondary">
-                                <i class="fa fa-comment-o" aria-hidden="true"></i> Comment
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <%- include('post') -%>
+            <div class="lds-facebook start-50 translate-middle"><div></div><div></div><div></div></div>
         </div>
-        <div class="col-12 col-md-3" style="background-color: #1c1e21">
+        <div class="hide-col col-lg-3" style="background-color: #1c1e21">
             <table id="notification-table" class="table">
                 <thead>
                     <tr>
@@ -102,7 +69,5 @@
         </div>
     </div>
 </div>
-
-
 
 <%- include('layouts/footer') -%>

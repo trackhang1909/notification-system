@@ -1,0 +1,19 @@
+<div id="comments-<%= post._id %>">
+    <% post.comments.forEach(comment => { %>
+        <div class="row g-3 align-items-center mt-1">
+            <div class="col-2 col-md-1" >
+                <%- include('avatar_comment', { comment }) -%>
+            </div>
+            <div class="col-10 col-md-11 padding-left-10">
+                <div class="comment-post">
+                    <p class="comment-text"><i><%= comment.user.fullname %></i>
+                        <% if (locals.userId == comment.user._id) { %>
+                            <a href="javascript:" class="delete-comment" data-postid="<%= post._id %>" data-id="<%= comment._id %>" onclick="deleteComment(this)">Xóa</a>
+                        <% } %>                
+                    </p>
+                    <p class="comment-text"><%= comment.comment %></p>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>

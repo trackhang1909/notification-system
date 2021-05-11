@@ -10,12 +10,14 @@ const User = new Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    class: { type: String },
+    faculty: { type: String },
     googleId: { type: String },
     role: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Role"
     },
-    category: [{
+    categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     }]
@@ -33,7 +35,7 @@ User.statics.addTokenToCookie = async (user, rememberPassword, res) => {
     },
     JWT_SECRET);
     rememberPassword === 'on' 
-        ? res.cookie('tokenAuth', token, { expires: new Date(Date.now() + 48 * 3600000), httpOnly: true }) 
+        ? res.cookie('tokenAuth', token, { expires: new Date(Date.now() + 48 * 3600000), httpOnly: true, overwrite: true }) 
         : res.cookie('tokenAuth', token);
     return res.redirect('/');
 }

@@ -1,0 +1,7 @@
+<% if (!comment.user.avatar) { %>
+    <div class="avatar-circle">
+        <span class="avatar-initials"><%= comment.user.fullname[0] %></span>
+    </div>
+<% } else { %>
+    <img src="<%= comment.user.avatar %>" alt="Avatar" class="avatar">
+<% } %></img>

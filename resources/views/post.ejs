@@ -1,0 +1,100 @@
+<div id="posts">
+    <% { posts.forEach(post => { %>
+        <table class="table mt-3 post-table">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="float-left w-60">
+                            <%- include('avatar_post', { post }) -%>
+                        </div>
+                        <div class="info-post-acc">
+                            <span><%= post.user.fullname %><br></span>
+                            <span class="time-post-acc"><%= post.createdAt.toLocaleString('vi') %></span>
+                        </div>
+                    </td>
+                    <td class="align-middle text-end">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-detail-post" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                <% if (post.user._id == locals.userId) { %>
+                                    <li><button data-id="<%= post._id %>" onclick="getContentPost(this)" class="dropdown-item" type="button">Chỉnh sửa bài viết</button></li>
+                                <% } %>
+                                <li><button data-id="<%= post._id %>" onclick="deletePost(this)" class="dropdown-item" type="button">Xóa bài viết</button></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <%- post.content %>
+                        <% if (post.images && post.images.length > 0) { %>
+                            <div id="carousel<%= post._id %>" class="carousel slide mt-3" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <% post.images.forEach((imageHtml, index) => { %>
+                                        <div class="carousel-item <%= index === 0 ? 'active' : ''%>">
+                                            <%- imageHtml %>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= post._id %>" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= post._id %>" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        <% } %>
+                        <% if (post.video) { %>
+                            <iframe class="mt-3" type="text/html" width="100%" height="500" src="<%= post.video %>" frameborder="0"></iframe>
+                        <% } %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fs-14"><span id="like-length-<%= post._id %>"><i class="fa fa-thumbs-up" aria-hidden="true"></i> <%= post.likes && post.likes.length %> lượt thích</span></td>
+                    <td class="text-end fs-14"><span id="cmt-length-<%= post._id %>"><i class="fa fa-comments" aria-hidden="true"></i> <%= post.commentsLength %> bình luận</span></td>
+                </tr>
+                <tr>
+                    <td class="w-50">
+                        <button data-id="<%= post._id %>" type="button" class="w-100percent btn btn-secondary" onclick="clickLike(this)">
+                            <% if (post.stringLikes && post.stringLikes.includes(locals.userId)) { %>
+                                <i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích
+                            <% } else { %>
+                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Thích
+                            <% } %>
+                        </button>
+                    </td>
+                    <td class="text-end border-bottom-w-0 w-50">
+                        <button data-id="<%= post._id %>" type="button" class="w-100percent btn btn-secondary" onclick="clickComment(this)">
+                            <i class="fa fa-comment-o" aria-hidden="true"></i> Bình luận
+                        </button>
+                    </td>
+                </tr>
+                <tr class="ds-none" id="cmt-<%= post._id %>">
+                    <td colspan="2" class="border-top-w-1 border-bottom-w-0">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-2 col-md-1" >
+                                <%- include('avatar') -%>
+                            </div>
+                            <div class="col-10 col-md-11 padding-left-10">
+                                <div class="position-relative">
+                                    <div class="position-absolute top-50 start-100 translate-middle">
+                                        <button id="btn-submit-cmt-<%= post._id %>" data-id="<%= post._id %>" onclick="submitComment(this)" type="button" class="btn btn-primary btn-sm margin-right-40px"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                    </div>
+                                    <textarea class="form-control padding-right-40" placeholder="Viết bình luận..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <%- include('comment', { post }) -%>
+                        <div class="mt-3">
+                            <a href="javascript:" class="see-more-cmts" data-id="<%= post._id %>" data-page="10" onclick="seeMoreCmts(this)">Xem thêm bình luận</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <% }) } %>
+</div>
