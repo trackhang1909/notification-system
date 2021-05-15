@@ -1,6 +1,16 @@
 const socket = io();
 
 window.onload = () => {
+    $("#loading").hide();
+
+    $(document).ajaxStart(function() {
+        $("#loading").show();
+    });
+
+    $(document).ajaxStop(function() {
+        $("#loading").hide();
+    });
+
     socket.on('new-notification', notification => {
         document.body.innerHTML += `<div id="new-notification">
             <div class="alert alert-primary" role="alert">

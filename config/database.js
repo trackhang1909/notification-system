@@ -45,7 +45,7 @@ let DatabaseSingleton = (function () {
                 await Role.create({
                     name: 'faculty'
                 })
-                .then(() => {
+                .then(role => {
                     roleIdFaculty = role._id
                     console.log("Added 'faculty' to roles collection");
                 })
@@ -261,23 +261,19 @@ let DatabaseSingleton = (function () {
                     console.log("Add category success");
                 })
                 .catch((err) => console.log("error", err));
+                await User.create({
+                    fullname: 'Admin',
+                    username: 'admin',
+                    email: 'admin@gmail.com',
+                    password: bcrypt.hashSync('12345678', 10),
+                    role: roleId,
+                    categories
+                })
+                .then(() => {
+                    console.log("Added 'admin' to users collection");
+                })
+                .catch((err) => console.log("error", err));
             }
-            User.estimatedDocumentCount((err, count) => {
-                if (!err && count === 0) {
-                    User.create({
-                        fullname: 'Admin',
-                        username: 'admin',
-                        email: 'admin@gmail.com',
-                        password: bcrypt.hashSync('12345678', 10),
-                        role: roleId,
-                        categories
-                    })
-                    .then(() => {
-                        console.log("Added 'admin' to users collection");
-                    })
-                    .catch((err) => console.log("error", err));
-                }
-            });
         });
     }
 

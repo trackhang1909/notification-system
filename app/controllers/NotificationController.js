@@ -148,7 +148,7 @@ class NotificationController {
             sampleFile.mv(uploadPath, function(err) {
                 if (err) {
                     urls.pop();
-                    return res.status(500).send(err);
+                    return res.status(500).json(err);
                 } 
             });
         });
