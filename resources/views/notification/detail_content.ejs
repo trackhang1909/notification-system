@@ -1,0 +1,43 @@
+<h3 class="text-center mt-4"><%- notification.title %></h3>
+<div class="mt-3">
+    <% if (notification.user == locals.userId) { %>
+        <a class="detail-noti float-left" href="javascript:" data-id="<%= notification._id %>" onclick="getContentNotification(this)"> Cập nhật</a>
+        <p class="detail-noti float-left ms-2 me-2">|</p>
+        <a data-id="<%= notification._id %>" onclick="showDeleteModal(this)" data-bs-toggle="modal" data-bs-target="#deleteNotiModal" class="detail-noti float-left" href="javascript:">Xóa</a>
+    <% } %>
+    
+    <div class="modal fade" id="deleteNotiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content delete-post-bg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn chắc chắn muốn xóa thông báo này ?
+                </div>
+                <div class="modal-footer">
+                    <button onclick="deleteNotification(this)" type="button" class="btn btn-danger">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="detail-noti float-right cate-date-noti">
+        <%= notification.category.name %> | Ngày đăng: <%= notification.createdAt.getDate() + '/' + notification.createdAt.getMonth() + '/' + notification.createdAt.getFullYear() %>
+    </p>
+</div>
+<div class="clearfix mb-4"></div>
+<div class="mb-5">
+    <%- notification.content %>
+</div>
+<% if (notification.files && notification.files.length > 0) { %>
+    <ul class="list-group mt-3 mb-5">
+        <li class="list-group-item list-group-item-dark" aria-current="true">Danh sách tệp tin đính kèm</li>
+        <% notification.files.forEach(file => { %>
+            <li class="list-group-item list-group-item-secondary">
+                <a href="<%= file %>" download><%= file.split('/uploads/files/')[1] %></a>
+                <button onclick="deleteFile(this)" data-id="<%= notification._id %>" data-path="<%= file %>" type="button" class="btn btn-danger btn-sm float-right">Xóa</button>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>

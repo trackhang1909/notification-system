@@ -3,27 +3,47 @@
         <table class="table mt-3 post-table">
             <tbody>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         <div class="float-left w-60">
                             <%- include('avatar_post', { post }) -%>
                         </div>
-                        <div class="info-post-acc">
+                        <div class="info-post-acc float-left">
                             <span><%= post.user.fullname %><br></span>
                             <span class="time-post-acc"><%= post.createdAt.toLocaleString('vi') %></span>
                         </div>
-                    </td>
-                    <td class="align-middle text-end">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary btn-detail-post" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                                <% if (post.user._id == locals.userId) { %>
-                                    <li><button data-id="<%= post._id %>" onclick="getContentPost(this)" class="dropdown-item" type="button">Chỉnh sửa bài viết</button></li>
-                                <% } %>
-                                <li><button data-id="<%= post._id %>" onclick="deletePost(this)" class="dropdown-item" type="button">Xóa bài viết</button></li>
-                            </ul>
-                        </div>
+                        <% if (post.user._id == locals.userId) { %>
+                            <div class="align-middle text-end float-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary btn-detail-post" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                        <li><button data-id="<%= post._id %>" onclick="getContentPost(this)" class="dropdown-item" type="button">Chỉnh sửa bài viết</button></li>
+                                        <li>
+                                            <button data-id="<%= post._id %>" onclick="showDeleteModal(this)" class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                                                Xóa bài viết
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content delete-post-bg">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bài viết</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Bạn chắc chắn muốn xóa bài viết này ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button onclick="deletePost(this)" class="btn btn-danger" type="button">Xóa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
                     </td>
                 </tr>
                 <tr>

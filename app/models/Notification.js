@@ -8,10 +8,11 @@ const Notification = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
-    type: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "NotificationType"
+        ref: "User"
     },
+    files: [{ type: String }]
 }, {
     timestamps: true,
 });

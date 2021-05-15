@@ -1,17 +1,17 @@
 <%- include('layouts/header') -%>
 
-<div class="container-fluid">
+<div class="container-fluid bg-and-color">
     <div class="row">
-        <div class="hide-col col-lg-3" style="background-color: #1c1e21;">
-            <div class="card text-white mt-3" style="background: transparent;">
-                <div class="card-body">
-                    <h5 class="card-title">Phân loại thông báo</h5>
-                    <p class="card-text">Tìm kiếm</p>
+        <div class="hide-col col-lg-3">
+            <div class="calendar">
+                <div class="calendar__picture">
+                    <h2>Xin chào,</h2>
+                    <h3><%= locals.fullname %></h3>
+                    <p>Hôm nay, <%= (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' +(new Date()).getFullYear() %></p>
                 </div>
             </div>
-            <a href="javascript:location.reload(true)">Refresh Page</a>
         </div>
-        <div class="col-12 col-lg-6" style="background-color: #1c1e21; min-height: 700px;">
+        <div class="col-12 col-lg-6" id="my-col-n2">
             <table id="my-post-table" class="table table-borderless mt-3">
                 <tbody>
                     <tr>
@@ -41,29 +41,26 @@
             <%- include('post') -%>
             <div class="lds-facebook start-50 translate-middle"><div></div><div></div><div></div></div>
         </div>
-        <div class="hide-col col-lg-3" style="background-color: #1c1e21">
+        <div class="hide-col col-lg-3">
             <table id="notification-table" class="table">
                 <thead>
                     <tr>
                         <th scope="col">Thông báo</th>
-                        <td class="text-end"><a href="#">Xem tất cả</a></td>
+                        <td class="text-end"><a href="/notification">Xem tất cả</a></td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="2">
-                            <span class="category-noti">[Phòng Đại học] - 23/11/2020</span><br>
-                            <h6 class="mt-2">Thông báo khai giảng khóa học Anh văn, Tin học, Toán tin</h6>
-                            <a class="detail-noti" href="/detail">Xem chi tiết</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <span class="category-noti">[Phòng Đại học] - 23/11/2020</span><br>
-                            <h6 class="mt-2">Thông báo khai giảng khóa học Anh văn, Tin học, Toán tin</h6>
-                            <a class="detail-noti" href="/detail">Xem chi tiết</a>
-                        </td>
-                    </tr>
+                    <% notifications.forEach(notification => { %>
+                        <tr>
+                            <td colspan="2">
+                                <span class="category-noti">[<%= notification.category.name %>] - <%= notification.createdAt.getDate() + '/' + (notification.createdAt.getMonth() + 1) + '/' + notification.createdAt.getFullYear() %></span><br>
+                                <div class="cut-text">
+                                    <h6 class="mt-2"><span class="badge rounded-pill bg-danger me-2">New</span> <%= notification.title %></h6>
+                                </div>
+                                <a class="detail-noti" href="/notification/detail?id=<%= notification._id %>">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                    <% }) %>
                 </tbody>
             </table>
         </div>

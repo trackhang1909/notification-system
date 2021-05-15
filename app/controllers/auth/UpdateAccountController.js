@@ -17,7 +17,7 @@ class UpdateAccountController {
                 url: '/uploads/images/' + sampleFile.name,
             });
         });
-        }
+    }
     // [GET] /update-account
     async updateAccountView(req, res) {
         const user = await User.findById(res.locals.userId).lean();

@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const connectDatabase = require('./config/database');
 const passportConfig = require('./config/passport');
 const fileUpload = require("express-fileupload");
+const socketio = require('socket.io');
 
 const app = express();
 
@@ -38,4 +39,11 @@ route(app);
 
 //Listen port
 const port = process.env.PORT;
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+const httpServer = app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+const io = socketio(httpServer);
+
+io.on('connection', client => {
+    client.on('create-notification', notification => {
+        client.broadcast.emit('new-notification', notification);
+    });
+});

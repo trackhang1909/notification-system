@@ -12,19 +12,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/notification">Thông báo</a>
                 </li>
+                <% if (typeof url !== 'undefined' && url === '/notification' && locals.role !== 'student') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:" data-bs-toggle="modal" data-bs-target="#notificationModal">Đăng thông báo</a>
+                    </li>
+                <% } %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        Phân loại thông báo
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/notification">Tất cả thông báo</a></li>
+                        <li><a class="dropdown-item" href="#">Chuyên mục</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
             <div class="float-left">
@@ -36,11 +36,12 @@
                         <%= locals.fullname %>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#">Xem trang cá nhân của bạn</a></li>
+                        <li><a class="dropdown-item" href="/my-profile">Xem trang cá nhân của bạn</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/update-account">Cập nhật thông tin</a></li>
                         <% if (locals.role === 'admin') { %>
                             <li><a class="dropdown-item" href="/register">Đăng ký tài khoản</a></li>
+                            <li><a class="dropdown-item" href="/register/update-categories">Cập nhật chuyên mục</a></li>
                         <% } %>
                         <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
                     </ul>

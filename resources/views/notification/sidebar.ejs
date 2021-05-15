@@ -1,0 +1,26 @@
+<div class="list-group border-radius-0">
+
+    <% if (locals.role !== 'student') { %>
+        <button type="button" class="type-noti list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#notificationModal">
+            Đăng thông báo
+        </button>
+    <% } %>
+
+    <div class="position-relative">
+        <button onclick="openItemTypeNoti(this)" type="button" class="type-noti list-group-item list-group-item-action">
+            Phân loại thông báo
+            <i class="fa fa-angle-right pe-3 position-absolute top-50 end-0 translate-middle-y" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div id="item-type-noti" class="ds-none">
+        <button type="button" class="ps-4 list-group-item list-group-item-action list-group-item-dark" onclick="window.location.href = '/notification'">
+            Tất cả thông báo
+        </button>
+        <button onclick="showSortCategory()" type="button" class="ps-4 list-group-item list-group-item-action list-group-item-dark">Chuyên mục</button>
+        <div id="sort-category" class="mb-5 ds-none">
+            <% allCategories.forEach(sortCategory => { %>
+                <a href="/notification?categoryId=<%= sortCategory._id %>" class="ps-5 list-group-item list-group-item-action list-group-item-secondary"><%= sortCategory.name %></a>
+            <% }) %>
+        </div>
+    </div>
+</div>
