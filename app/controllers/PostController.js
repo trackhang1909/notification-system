@@ -28,6 +28,32 @@ class PostController {
                 return res.render('post', { posts });
             });
     }
+    // [GET] /post/my-profile
+    myProfile(req, res) {
+        let page = parseInt(req.query.page) || 10;
+        
+        Post.find({ user: res.locals.userId })
+            .populate('user')
+            .populate({ path: 'comments', 
+                options: { limit: 5, sort: { 'createdAt': -1 } },
+                populate: {
+                    path: 'user'
+            }})
+            .sort([['createdAt', -1]])
+            .limit(page)
+            .lean()
+            .then(async posts => {
+                for await (const post of posts) {
+                    const p2 = await Post.findById(post._id).lean();
+                    post.commentsLength = p2.comments.length;
+                    
+                    let stringArray = post.likes.map(e => String(e))
+                    post.stringLikes = stringArray;
+                }
+        
+                return res.render('post', { posts });
+            });
+    }
     // [POST] /post
     store(req, res) {
         const { content: allContent } = req.body;
@@ -118,9 +144,9 @@ class PostController {
             .then(async () => { 
                 tempPost = await Post.findById(_id).lean();
                 likeLength = tempPost.likes.length;
-                return res.json({ status: 'pull success', likeLength }); 
+                return res.json({ status: 'success', likeLength }); 
             })
-            .catch(() => { return res.json({ status: 'pull fail', likeLength }) });
+            .catch(() => { return res.json({ status: 'fail', likeLength }) });
         }
     }
     // [POST] /post/get-content-by-id
@@ -163,15 +189,27 @@ class PostController {
         })
         .then(comment => { 
             //Update post - comments
-            Post.updateOne({ _id }, { '$push': { 'comments': comment._id } })
-            .then(async () => { 
-                tempPost = await Post.findById(_id).lean();
-                commentLength = tempPost.comments.length;
+            Post.findByIdAndUpdate(_id, { '$push': { 'comments': comment._id } }, { new: true })
+            .then(post => { 
+                commentLength = post.comments.length;
                 return res.json({ status: 'success', commentLength }); 
             })
             .catch(() => { return res.json({ status: 'fail', commentLength }) });
         })
         .catch(() => { res.json({ status: 'fail', commentLength }) });
+    }
+    // [POST] /post/comment
+    async updateComment(req, res) {
+        const { _id, postId, comment } = req.body;
+        let tempPost = await Post.findById(postId).lean();
+        let commentLength = tempPost.comments.length;
+        Comment.updateOne({ _id }, { comment })
+        .then(() => {
+            return res.json({ status: 'success', commentLength }); 
+        })
+        .catch(() => {
+            return res.json({ status: 'fail', commentLength });
+        });
     }
     // [DELETE] /post/comment
     async destroyComment(req, res) {
@@ -181,36 +219,14 @@ class PostController {
         
         Comment.deleteOne({ _id }).then(() => {
             //Update post - comments
-            Post.updateOne({ _id: postId }, { '$pull': { 'comments': _id } })
-            .then(async () => { 
-                tempPost = await Post.findById(postId).lean();
-                commentLength = tempPost.comments.length;
+            Post.findByIdAndUpdate({ _id: postId }, { '$pull': { 'comments': _id } }, { new: true })
+            .then(post => { 
+                commentLength = post.comments.length;
                 return res.json({ status: 'success', commentLength }); 
             })
             .catch(() => { return res.json({ status: 'fail', commentLength }) });
         })
         .catch(() => { res.json({ status: 'fail', commentLength }) });
-    }
-    // [GET] /post/pagination
-    pagination(req, res) {
-        let perPage = 5;
-        let page = req.body.page || 1;
-
-        Post
-            .find()
-            .sort([['createdAt', -1]])
-            .skip((perPage * page) - perPage) 
-            .limit(perPage)
-            .exec((err, posts) => {
-                Post.countDocuments((err, count) => {
-                    if (err) return next(err);
-                    res.json({
-                        posts,
-                        current: page, 
-                        pages: Math.ceil(count / perPage) 
-                    });
-            });
-        });
     }
 }
 

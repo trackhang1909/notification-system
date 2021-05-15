@@ -35,6 +35,29 @@ class RegisterController {
             return res.status(400).json({error: 'true', message: 'Yêu cầu không hợp lệ'});
         }
     }
+    // [GET] /register/update-categories
+    async indexUpdateCategories(req, res) {
+        const categories = await Category.find({}).lean();
+        const users = await User.find({}).lean();
+        res.render('auth/update_categories', { users, categories });
+    }
+    // [POST] /register/get-categories
+    getCategories(req, res) {
+        const { _id } = req.body;
+        User.find({ _id }).lean().then(user => {
+            return res.json({ status: 'success', user });
+        })
+        .catch(() => {
+            return res.json({ status: 'fail', user });
+        });
+    }
+    // [POST] /register/update-categories
+    async updateCategories(req, res) {
+        const { _id, categories } = req.body;
+        User.updateOne({ _id }, { categories })
+        .then(() => { return res.json({ status: 'success', message: 'Cập nhật thành công' }) })
+        .catch(() => { return res.json({ status: 'fail', message: 'Cập nhật thất bại' }) })
+    }
 }
 
 module.exports = new RegisterController();

@@ -11,10 +11,8 @@ router.post('/like', PostController.like);
 router.post('/get-content-by-id', PostController.getContentById);
 router.get('/comment', PostController.indexComment);
 router.post('/comment', PostController.storeComment);
+router.put('/comment', PostController.updateComment);
 router.delete('/comment', PostController.destroyComment);
-
-
-
-router.get('/pagination', PostController.pagination);
+router.get('/my-profile', PostController.myProfile);
 
 module.exports = router;

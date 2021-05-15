@@ -280,6 +280,27 @@ ul.social-footer2 li a {
     text-transform: capitalize;
 }
 
+.register-form-select-username {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid transparent;
+    color: white !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.register-form-select-username:hover, .register-form-select-username:focus {
+    background-color: rgba(255, 255, 255, 0.0001);
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.register-option-select-username {
+    background-color: #252525;
+}
+
 .login-form-control {
     background: transparent;
     color: white !important;
@@ -727,35 +748,184 @@ p {
 
 .delete-comment {
     font-size: smaller; 
-    margin-left: 10px;
     color: #e0e0e0;
     text-decoration-line: none;
 }
 
-.delete-comment:hover {
-    font-size: smaller; 
-    margin-left: 10px;
-    text-decoration-line: underline;
-    color: #e0e0e0;
+.type-noti {
+    background-color: #2c3034; 
+    color: white; 
+    margin-top: 12px; 
 }
 
-@media only screen and (max-width: 960px) {
+.type-noti:hover {
+    background-color: #6e6e6e73; 
+    color: white; 
+    margin-top: 12px; 
+}
+
+#notificationModal .modal-content {
+    background-color: #494949; 
+    color: white;
+}
+
+#my-col-n1 {
+    padding-right: 0;
+}
+
+#my-col-n2 {
+    min-height: 700px; 
+}
+
+.border-radius-0 {
+    border-radius: 0px;
+}
+
+.border-radius-2 {
+    border-radius: 2px;
+}
+
+.margin-top-12px {
+    margin-top: 12px;
+}
+
+.bg-and-color {
+    background-color: #1c1e21; 
+    color: white;
+}
+
+.cut-text p { 
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.cut-text h6 { 
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+}
+
+.pagination-custom {
+    background-color: #1c1e21; 
+    color: white;
+    border-color: #2c3034;
+}
+
+.calendar {
+    position: relative;
+    width: 90%;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 5px 50px rgba(#000, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 16px;
+}
+
+.calendar__picture {
+    position: relative;
+    height: 200px;
+    padding: 20px;
+    color: #fff;
+    background: #262626
+        url('/images/bg-login.jpg')
+        no-repeat center / cover;
+    text-shadow: 0 2px 2px rgba(#000, 0.2);
+    box-sizing: border-box;
+}
+
+.calendar__picture::before {
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background: linear-gradient(to top, rgba(#000, 0.25), rgba(#000, 0.1));
+}
+
+.calendar__picture h2 {
+    margin: 0;
+    font-weight: 200;
+}
+
+.calendar__picture h3 {
+    margin: 0;
+    font-weight: 200;
+}
+
+#new-notification {
+    position: fixed;
+    bottom: 0;
+    margin-left: 10px;
+}
+
+.cut-text-noti span { 
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    width: 100px; 
+    height: 1.2em; 
+    white-space: nowrap;
+}
+
+.delete-post-bg {
+    background-color: #494949; 
+    color: white;
+}
+  
+.current-number {
+    background-color: #e9ecef;
+    color: #0a58ca;
+}
+
+.h-100px {
+    height: 100px !important;
+}
+
+.label-textarea {
+    color: #252525;
+}
+
+.mt-0 {
+    margin-top: 0px;
+}
+
+.date-cmt {
+    margin: 5px 10px;
+    font-size: 11px;
+    font-style: italic;
+}
+
+@media only screen and (max-width: 992px) {
     .hide-col {
         display: none;
     }
 }
 
-.href-noti {
-    font-size: smaller; 
-    color: #e0e0e0;
-    text-decoration-line: none;
+@media only screen and (max-width: 576px) {
+    .noti-title {
+        display: inline-block;
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        width: 200px; 
+        white-space: nowrap;
+    }
+    .cate-date-noti {
+        float: none;
+        clear: both;
+        padding-top: 5px;
+    }
 }
 
-.href-noti:hover {
-    font-size: smaller; 
-    text-decoration-line: underline;
-    color: #e0e0e0;
-}
+
 
 
 

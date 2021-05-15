@@ -6,12 +6,60 @@
             </div>
             <div class="col-10 col-md-11 padding-left-10">
                 <div class="comment-post">
-                    <p class="comment-text"><i><%= comment.user.fullname %></i>
-                        <% if (locals.userId == comment.user._id) { %>
-                            <a href="javascript:" class="delete-comment" data-postid="<%= post._id %>" data-id="<%= comment._id %>" onclick="deleteComment(this)">Xóa</a>
-                        <% } %>                
-                    </p>
-                    <p class="comment-text"><%= comment.comment %></p>
+                    <p class="comment-text float-left"><i><%= comment.user.fullname %></i></p>
+                    <% if (locals.userId == comment.user._id) { %>
+                        <div class="dropdown float-right">
+                            <button class="btn btn-sm btn-secondary btn-detail-post" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#updateCommentModal" href="javascript:" class="delete-comment dropdown-item" data-postid="<%= post._id %>" data-id="<%= comment._id %>" onclick="showUpdateCmtModal(this)">Chỉnh sửa</a>
+                                </li>
+                                <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#deleteCommentModal" href="javascript:" class="delete-comment dropdown-item" data-postid="<%= post._id %>" data-id="<%= comment._id %>" onclick="showDeleteCmtModal(this)">Xóa</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal fade" id="updateCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content delete-post-bg">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bình luận</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-floating">
+                                            <textarea class="form-control h-100px" id="floatingTextareaCmt"></textarea>
+                                            <label for="floatingTextareaCmt" class="label-textarea">Bình luận mới</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" onclick="updateComment(this)">Cập nhật</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content delete-post-bg">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bình luận</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn chắc chắn muốn xóa bình luận này ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" onclick="deleteComment(this)">Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    <% } %>
+                    <div class="clearfix"></div>
+                    <p id="content-cmt-<%= comment._id %>" class="comment-text mt-0"><%= comment.comment %></p>
+                    <p class="date-cmt"><%= comment.createdAt.toLocaleString('vi') %></p>
                 </div>
             </div>
         </div>
