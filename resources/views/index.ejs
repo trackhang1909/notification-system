@@ -7,6 +7,10 @@
                 <div class="calendar__picture">
                     <h2>Xin chào,</h2>
                     <h3><%= locals.fullname %></h3>
+                    <% if (locals.role === 'student') { %>
+                        <p>Lớp: <%= me.class %></p>
+                        <p>Khoa: <%= me.faculty %></p>
+                    <% } %>
                     <p>Hôm nay, <%= (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' +(new Date()).getFullYear() %></p>
                 </div>
             </div>

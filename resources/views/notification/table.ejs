@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <a class="detail-noti float-left" href="/notification/detail?id=<%= notification._id %>">Chi tiết thông báo</a>
-                        <% if (notification.user == locals.userId) { %>
+                        <% if (notification.user == locals.userId || locals.role === 'admin') { %>
                             <p class="detail-noti float-left ms-2 me-2">|</p>
                             <a class="detail-noti float-left" href="javascript:" data-id="<%= notification._id %>" onclick="getContentNotification(this)"> Cập nhật</a>
                             <p class="detail-noti float-left ms-2 me-2">|</p>

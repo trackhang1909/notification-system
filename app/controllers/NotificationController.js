@@ -148,10 +148,13 @@ class NotificationController {
             sampleFile.mv(uploadPath, function(err) {
                 if (err) {
                     urls.pop();
-                    return res.status(500).json(err);
                 } 
             });
         });
+
+        if (urls.length !== files.length) {
+            return res.status(500).json({ uploaded: false });
+        }
 
         return res.status(200).json({
             uploaded: true,
@@ -190,13 +193,19 @@ class NotificationController {
     }
     // [POST] /notification/delete-file
     deleteFile(req, res) {
-        const { _id, path } = req.body;
-        fs.unlinkSync(global.rootName + '/public' + path);
-        Notification.updateOne({ _id }, { '$pull': { 'files': path } })
-            .then(async () => { 
-                return res.json({ status: 'success', message: 'Xóa tệp tin thành công' }); 
-            })
-            .catch(() => { return res.json({ status: 'fail', message: 'Xóa tệp tin thất bại' }) });
+        try {
+            const { _id, path } = req.body;
+            fs.unlinkSync(global.rootName + '/public' + path);
+            Notification.updateOne({ _id }, { '$pull': { 'files': path } })
+                .then(async () => { 
+                    return res.json({ status: 'success', message: 'Xóa tệp tin thành công' }); 
+                })
+                .catch(() => { return res.json({ status: 'fail', message: 'Xóa tệp tin thất bại' }) });
+        }
+        catch (error) {
+            return res.json({ status: 'fail', message: 'Xóa tệp tin thất bại' });
+        }
+
     }
 }
 

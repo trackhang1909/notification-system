@@ -19,11 +19,16 @@
                 <% } %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Phân loại thông báo
+                        Chuyên mục
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/notification">Tất cả thông báo</a></li>
-                        <li><a class="dropdown-item" href="#">Chuyên mục</a></li>
+                        <% allCategories.forEach(sortCategory => { %>
+                            <li>
+                                <a class="dropdown-item new-dropdown-item" href="/notification?categoryId=<%= sortCategory._id %>">
+                                    <%= sortCategory.name %>
+                                </a>
+                            </li>
+                        <% }) %>
                     </ul>
                 </li>
             </ul>

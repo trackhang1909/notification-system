@@ -10,7 +10,7 @@ class UpdateAccountController {
         let uploadPath = global.rootName + '/public/uploads/images/' + sampleFile.name;
 
         sampleFile.mv(uploadPath, function(err) {
-            if (err) return res.status(500).send(err);
+            if (err) return res.status(500).json({ uploaded: false });
 
             res.status(200).json({
                 uploaded: true,

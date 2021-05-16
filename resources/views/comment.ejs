@@ -7,7 +7,7 @@
             <div class="col-10 col-md-11 padding-left-10">
                 <div class="comment-post">
                     <p class="comment-text float-left"><i><%= comment.user.fullname %></i></p>
-                    <% if (locals.userId == comment.user._id) { %>
+                    <% if (locals.userId == comment.user._id || locals.role === 'admin') { %>
                         <div class="dropdown float-right">
                             <button class="btn btn-sm btn-secondary btn-detail-post" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>

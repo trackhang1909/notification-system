@@ -3,7 +3,6 @@ const Role = require('../app/models/Role');
 const Category = require('../app/models/Category');
 const User = require('../app/models/User');
 const bcrypt = require('bcrypt');
-const Notification = require('../app/models/Notification');
 
 let DatabaseSingleton = (function () {
 

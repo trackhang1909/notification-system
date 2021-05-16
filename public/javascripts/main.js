@@ -3,14 +3,6 @@ const socket = io();
 window.onload = () => {
     $("#loading").hide();
 
-    $(document).ajaxStart(function() {
-        $("#loading").show();
-    });
-
-    $(document).ajaxStop(function() {
-        $("#loading").hide();
-    });
-
     socket.on('new-notification', notification => {
         document.body.innerHTML += `<div id="new-notification">
             <div class="alert alert-primary" role="alert">
@@ -39,6 +31,7 @@ if (window.location.pathname === '/register') {
     registerForm.addEventListener('submit', registerUser);
 
     function registerUser (event) {
+        $("#loading").show();
         event.preventDefault();
         const alertError = document.getElementById('alert-error-register');
         const alertSuccess = document.getElementById('alert-success-register');
@@ -64,6 +57,7 @@ if (window.location.pathname === '/register') {
             })
         };
         if (password !== confirmPassword) {
+            $("#loading").hide();
             alertSuccess.style.display = 'none';
             alertError.style.display = 'block';
             alertError.innerText = 'Mật khẩu xác nhận không hợp lệ';
@@ -72,6 +66,7 @@ if (window.location.pathname === '/register') {
             fetch('/register', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.error === 'true') {
                     alertSuccess.style.display = 'none';
                     alertError.style.display = 'block';
@@ -100,10 +95,12 @@ if (window.location.pathname === '/register/update-categories') {
     username.addEventListener('change', changeUserName);
 
     function changeUserName() {
+        $("#loading").show();
         alertSuccess.style.display = 'none';
         alertError.style.display = 'none';
         const _id = $('#username').val();
         if (_id === '') {
+            $("#loading").hide();
             $('#categories').val(null);
             $('#categories').select2().trigger('change');
             return;
@@ -121,6 +118,7 @@ if (window.location.pathname === '/register/update-categories') {
         fetch('/register/get-categories', options)
         .then(res => res.json())
         .then(data => {
+            $("#loading").hide();
             if (data.status === 'success') {
                 let categorySelect = [];
                 data.user[0].categories.forEach(category => {
@@ -141,10 +139,12 @@ if (window.location.pathname === '/register/update-categories') {
     updateRegisterForm.addEventListener('submit', updateRegisterUser);
 
     function updateRegisterUser (event) {
+        $("#loading").show();
         event.preventDefault();
         const _id = $('#username').val();
         const categories = $("#categories").val();
         if (_id === '') {
+            $("#loading").hide();
             alertSuccess.style.display = 'none';
             alertError.style.display = 'block';
             alertError.innerText = 'Chưa chọn tên đăng nhập';
@@ -164,6 +164,7 @@ if (window.location.pathname === '/register/update-categories') {
         fetch('/register/update-categories', options)
         .then(res => res.json())
         .then(data => {
+            $("#loading").hide();
             if (data.status === 'fail') {
                 alertSuccess.style.display = 'none';
                 alertError.style.display = 'block';
@@ -215,6 +216,7 @@ if (window.location.pathname === '/update-account') {
     }
     
     async function updateAccountFaculty (event) {
+        $("#loading").show();
         event.preventDefault();
         const fullname = document.getElementById('fullname').value;
         const password = document.getElementById('password').value;
@@ -222,6 +224,7 @@ if (window.location.pathname === '/update-account') {
         const avatar = document.getElementById('avatar');
 
         if (password !== confirmPassword) {
+            $("#loading").hide();
             alertSuccess.style.display = 'none';
             alertError.style.display = 'block';
             alertError.innerText = 'Mật khẩu xác nhận không hợp lệ';
@@ -230,20 +233,27 @@ if (window.location.pathname === '/update-account') {
 
         let url = '';
         let check = true;
-        
+        console.log(avatar.files[0]);
         const checkUpload = uploadAvatar(avatar.files[0]);
         await checkUpload.then(data => {
-            if (data === false) return check = false;
+            if (data === false || data.uploaded === false) return check = false;
             if (data.uploaded) {
                 url = data.url;
             }
         }).catch(() => {
+            $("#loading").hide();
             alertSuccess.style.display = 'none';
             alertError.style.display = 'block';
             alertError.innerText = 'Hình ảnh không hợp lệ';
         });
 
-        if (!check) return;
+        if (!check) {
+            $("#loading").hide();
+            alertSuccess.style.display = 'none';
+            alertError.style.display = 'block';
+            alertError.innerText = 'Hình ảnh tải lên không thành công';
+            return;
+        }
 
         const options = {
             method: 'POST',
@@ -260,6 +270,7 @@ if (window.location.pathname === '/update-account') {
         fetch('/update-account/faculty', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.error === 'true') {
                     alertSuccess.style.display = 'none';
                     alertError.style.display = 'block';
@@ -272,6 +283,7 @@ if (window.location.pathname === '/update-account') {
     }
 
     async function updateAccountStudent (event) {
+        $("#loading").show();
         event.preventDefault();
         const fullname = document.getElementById('fullname').value;
         const classValue = document.getElementById('class').value;
@@ -283,17 +295,24 @@ if (window.location.pathname === '/update-account') {
         
         const checkUpload = uploadAvatar(avatar.files[0]);
         await checkUpload.then(data => {
-            if (data === false) return check = false;
+            if (data === false || data.uploaded === false) return check = false;
             if (data.uploaded) {
                 url = data.url;
             }
         }).catch(() => {
+            $("#loading").hide();
             alertSuccess.style.display = 'none';
             alertError.style.display = 'block';
             alertError.innerText = 'Hình ảnh không hợp lệ';
         });
 
-        if (!check) return;
+        if (!check) {
+            $("#loading").hide();
+            alertSuccess.style.display = 'none';
+            alertError.style.display = 'block';
+            alertError.innerText = 'Hình ảnh tải lên không thành công';
+            return;
+        }
 
         const options = {
             method: 'POST',
@@ -311,6 +330,7 @@ if (window.location.pathname === '/update-account') {
         fetch('/update-account/student', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.error === 'true') {
                     alertSuccess.style.display = 'none';
                     alertError.style.display = 'block';
@@ -383,23 +403,36 @@ if (window.location.pathname === '/notification/detail') {
     const formFileMultiple = document.getElementById('formFileMultiple');
 
     async function createNotification(event) {
+        $("#loading").show();
         event.preventDefault();
         const content = editor.getData();
 
         if (!content) {
+            $("#loading").hide();
             alertify.error('Nội dung không được để trống');
             return;
         }
 
         let files = [];
+        let check = true;
         const checkUpload = uploadFiles(formFileMultiple.files);
         await checkUpload.then(data => {
             if (data.uploaded) {
                 files = data.urls;
             }
+            if (data.uploaded === false) {
+                check = false;
+            }
         }).catch(() => {
+            $("#loading").hide();
             alertify.error('Tệp tin không hợp lệ');
         });
+
+        if (!check) {
+            $("#loading").hide();
+            alertify.error('Tệp tin tải lên không thành công');
+            return;
+        }
 
         const options = {
             method: 'POST',
@@ -417,31 +450,45 @@ if (window.location.pathname === '/notification/detail') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 socket.emit('create-notification', data.notification);
                 window.location.href = '/notification';
             });
     }
 
     async function updateNotification(event) {
+        $("#loading").show();
         event.preventDefault();
 
         const _id = event.currentTarget._id;
         const content = editor.getData();
 
         if (!content) {
+            $("#loading").hide();
             alertify.error('Nội dung không được để trống');
             return;
         }
 
         let files = [];
+        let check = true;
         const checkUpload = uploadFiles(formFileMultiple.files);
         await checkUpload.then(data => {
             if (data.uploaded) {
                 files = data.urls;
             }
+            if (data.uploaded === false) {
+                check = false;
+            }
         }).catch(() => {
+            $("#loading").hide();
             alertify.error('Tệp tin không hợp lệ');
         });
+
+        if (!check) {
+            $("#loading").hide();
+            alertify.error('Tệp tin tải lên không thành công');
+            return;
+        }
 
         const options = {
             method: 'PUT',
@@ -460,6 +507,7 @@ if (window.location.pathname === '/notification/detail') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData('');
                 title.value = '';
                 category.selectedIndex = '0';
@@ -475,6 +523,7 @@ if (window.location.pathname === '/notification/detail') {
     }
 
     function getContentNotification(event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const options = {
             method: 'POST',
@@ -488,6 +537,7 @@ if (window.location.pathname === '/notification/detail') {
         fetch('/notification/get-content-by-id', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.status === 'success') {
                     editor.setData(data.notification.content);
                     title.value = data.notification.title;
@@ -517,6 +567,7 @@ if (window.location.pathname === '/notification/detail') {
     }
 
     function deleteNotification(event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const currentPage = event.dataset.page;
         const options = {
@@ -531,6 +582,7 @@ if (window.location.pathname === '/notification/detail') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 window.location.href = '/notification';
             });
     }
@@ -546,6 +598,7 @@ if (window.location.pathname === '/notification/detail') {
     }
 
     function deleteFile(event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const path = event.dataset.path;
         const options = {
@@ -562,6 +615,7 @@ if (window.location.pathname === '/notification/detail') {
         fetch('/notification/delete-file', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 $('#my-col-n2').load('/notification/detail-content?id=' + _id);
                 if (data.status === 'success') alertify.success(data.message)
                 else alertify.error(data.message);
@@ -629,23 +683,36 @@ if (window.location.pathname === '/notification') {
     const formFileMultiple = document.getElementById('formFileMultiple');
 
     async function createNotification(event) {
+        $("#loading").show();
         event.preventDefault();
         const content = editor.getData();
 
         if (!content) {
+            $("#loading").hide();
             alertify.error('Nội dung không được để trống');
             return;
         }
 
         let files = [];
+        let check = true;
         const checkUpload = uploadFiles(formFileMultiple.files);
         await checkUpload.then(data => {
             if (data.uploaded) {
                 files = data.urls;
             }
+            if (data.uploaded === false) {
+                check = false;
+            }
         }).catch(() => {
+            $("#loading").hide();
             alertify.error('Tệp tin không hợp lệ');
         });
+
+        if (!check) {
+            $("#loading").hide();
+            alertify.error('Tệp tin tải lên không thành công');
+            return;
+        }
 
         const options = {
             method: 'POST',
@@ -663,6 +730,7 @@ if (window.location.pathname === '/notification') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData('');
                 title.value = '';
                 category.selectedIndex = '0';
@@ -676,6 +744,7 @@ if (window.location.pathname === '/notification') {
     }
 
     async function updateNotification(event) {
+        $("#loading").show();
         event.preventDefault();
 
         const _id = event.currentTarget._id;
@@ -683,19 +752,31 @@ if (window.location.pathname === '/notification') {
         const content = editor.getData();
 
         if (!content) {
+            $("#loading").hide();
             alertify.error('Nội dung không được để trống');
             return;
         }
 
         let files = [];
+        let check = true;
         const checkUpload = uploadFiles(formFileMultiple.files);
         await checkUpload.then(data => {
             if (data.uploaded) {
                 files = data.urls;
             }
+            if (data.uploaded === false) {
+                check = false;
+            }
         }).catch(() => {
+            $("#loading").hide();
             alertify.error('Tệp tin không hợp lệ');
         });
+
+        if (!check) {
+            $("#loading").hide();
+            alertify.error('Tệp tin tải lên không thành công');
+            return;
+        }
 
         const options = {
             method: 'PUT',
@@ -714,6 +795,7 @@ if (window.location.pathname === '/notification') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData('');
                 title.value = '';
                 category.selectedIndex = '0';
@@ -737,6 +819,7 @@ if (window.location.pathname === '/notification') {
     }
 
     function getContentNotification(event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const options = {
             method: 'POST',
@@ -750,6 +833,7 @@ if (window.location.pathname === '/notification') {
         fetch('/notification/get-content-by-id', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.status === 'success') {
                     editor.setData(data.notification.content);
                     title.value = data.notification.title;
@@ -779,6 +863,7 @@ if (window.location.pathname === '/notification') {
     }
 
     function deleteNotification(event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const currentPage = event.dataset.page;
         const options = {
@@ -793,6 +878,7 @@ if (window.location.pathname === '/notification') {
         fetch('/notification', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 $('#deleteNotiModal').modal('hide');
                 $('#notifications').load('/notification/table?page=' + currentPage);
                 if (data.status === 'success') alertify.success(data.message)
@@ -830,6 +916,7 @@ if (window.location.pathname === '/') {
         });
 
     function createPost () {
+        $("#loading").show();
         const content = editor.getData();
         const options = {
             method: 'POST',
@@ -843,6 +930,7 @@ if (window.location.pathname === '/') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData(''); 
                 $('#addPostModal').modal('hide');
                 $('#posts').load('/post?page=' + pagePost);
@@ -852,6 +940,7 @@ if (window.location.pathname === '/') {
     }
 
     function getContentPost (event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         let btn = document.getElementById('btn-cr-up-post');
         btn.setAttribute('onclick', 'updatePost("' + _id + '")');
@@ -867,6 +956,7 @@ if (window.location.pathname === '/') {
         fetch('/post/get-content-by-id', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.status === 'success') editor.setData(data.allContent);
                 $('#addPostModal .modal-title').text('Chỉnh sửa bài viết');
                 $('#addPostModal .modal-body .btn').text('Cập nhật');
@@ -875,6 +965,7 @@ if (window.location.pathname === '/') {
     }
 
     function updatePost (_id) {
+        $("#loading").show();
         const content = editor.getData();
         const options = {
             method: 'PUT',
@@ -889,6 +980,7 @@ if (window.location.pathname === '/') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData(''); 
                 $('#addPostModal').modal('hide');
                 $('#addPostModal .modal-title').text('Tạo bài viết');
@@ -907,6 +999,7 @@ if (window.location.pathname === '/') {
     }
 
     function deletePost (event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const options = {
             method: 'DELETE',
@@ -920,6 +1013,7 @@ if (window.location.pathname === '/') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 $('#deletePostModal').modal('hide');
                 $('#posts').load('/post?page=' + pagePost);
                 if (data.status === 'success') alertify.success(data.message)
@@ -1134,6 +1228,7 @@ if (window.location.pathname === '/my-profile') {
         });
 
     function createPost () {
+        $("#loading").show();
         const content = editor.getData();
         const options = {
             method: 'POST',
@@ -1147,6 +1242,7 @@ if (window.location.pathname === '/my-profile') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData(''); 
                 $('#addPostModal').modal('hide');
                 $('#posts').load('/post/my-profile?page=' + pagePost);
@@ -1156,6 +1252,7 @@ if (window.location.pathname === '/my-profile') {
     }
 
     function getContentPost (event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         let btn = document.getElementById('btn-cr-up-post');
         btn.setAttribute('onclick', 'updatePost("' + _id + '")');
@@ -1171,6 +1268,7 @@ if (window.location.pathname === '/my-profile') {
         fetch('/post/get-content-by-id', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 if (data.status === 'success') editor.setData(data.allContent);
                 $('#addPostModal .modal-title').text('Chỉnh sửa bài viết');
                 $('#addPostModal .modal-body .btn').text('Cập nhật');
@@ -1179,6 +1277,7 @@ if (window.location.pathname === '/my-profile') {
     }
 
     function updatePost (_id) {
+        $("#loading").show();
         const content = editor.getData();
         const options = {
             method: 'PUT',
@@ -1193,6 +1292,7 @@ if (window.location.pathname === '/my-profile') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 editor.setData(''); 
                 $('#addPostModal').modal('hide');
                 $('#addPostModal .modal-title').text('Tạo bài viết');
@@ -1211,6 +1311,7 @@ if (window.location.pathname === '/my-profile') {
     }
 
     function deletePost (event) {
+        $("#loading").show();
         const _id = event.dataset.id;
         const options = {
             method: 'DELETE',
@@ -1224,6 +1325,7 @@ if (window.location.pathname === '/my-profile') {
         fetch('/post', options)
             .then(res => res.json())
             .then(data => {
+                $("#loading").hide();
                 $('#deletePostModal').modal('hide');
                 $('#posts').load('/post/my-profile?page=' + pagePost);
                 if (data.status === 'success') alertify.success(data.message)

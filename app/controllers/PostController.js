@@ -66,7 +66,9 @@ class PostController {
         let images = result[1];
         let video = result[2];
         //Check video embed
-        if (video && !video.includes('embed')) return res.json({ status: 'fail', message: 'Video không hợp lệ' });
+        if (video && !video.includes('embed')) {
+            video = video.replace('watch?v=', 'embed/');
+        }
         if (!content) return res.json({ status: 'fail', message: 'Nội dung không được để trống' });
         Post.create({
             content,
@@ -89,7 +91,9 @@ class PostController {
         let images = result[1];
         let video = result[2];
         //Check video embed
-        if (video && !video.includes('embed')) return res.json({ status: 'fail', message: 'Video không hợp lệ' });
+        if (video && !video.includes('embed')) {
+            video = video.replace('watch?v=', 'embed/');
+        }
         if (!content) return res.json({ status: 'fail', message: 'Nội dung không được để trống' });
         Post.updateOne({ _id }, {
             content,

@@ -7,6 +7,7 @@ const connectDatabase = require('./config/database');
 const passportConfig = require('./config/passport');
 const fileUpload = require("express-fileupload");
 const socketio = require('socket.io');
+const Notification = require('./app/models/Notification');
 
 const app = express();
 
@@ -47,3 +48,5 @@ io.on('connection', client => {
         client.broadcast.emit('new-notification', notification);
     });
 });
+
+

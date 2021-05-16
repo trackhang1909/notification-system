@@ -1,5 +1,7 @@
 const Post = require("../models/Post");
 const Notification = require("../models/Notification");
+const Category = require("../models/Category");
+const User = require("../models/User");
 
 const title = 'Trang Chủ';
 
@@ -24,9 +26,11 @@ class HomeController {
                     let stringArray = post.likes.map(e => String(e))
                     post.stringLikes = stringArray;
                 }
+                const me = await User.findById(res.locals.userId).lean();
+                const allCategories = await Category.find({}).lean();
                 const notifications = await Notification.find({})
                     .populate('category').sort([['createdAt', -1]]).limit(10).lean();
-                return res.render('index', { title, posts, notifications });
+                return res.render('index', { title, posts, notifications, allCategories, me });
             });
     }
     // [GET] /my-profile
@@ -49,9 +53,11 @@ class HomeController {
                     let stringArray = post.likes.map(e => String(e))
                     post.stringLikes = stringArray;
                 }
+                const me = await User.findById(res.locals.userId).lean();
+                const allCategories = await Category.find({}).lean();
                 const notifications = await Notification.find({})
                     .populate('category').sort([['createdAt', -1]]).limit(10).lean();
-                return res.render('index', { title, posts, notifications });
+                return res.render('index', { title, posts, notifications, allCategories, me });
             });
     }
 }

@@ -923,6 +923,10 @@ p {
         clear: both;
         padding-top: 5px;
     }
+    .new-dropdown-item {
+        white-space: normal; 
+        width: 15rem;
+    }
 }
 
 /* Loading ajax */
@@ -950,6 +954,10 @@ p {
     transform: -ms-translate(-50%, -50%);
     position: absolute;
     z-index: 999999;
+}
+
+table {
+    color: white;
 }
 
 
